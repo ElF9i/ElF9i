@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mohamed El Feki Said – IoT et systèmes embarqués</title>
+<meta name="description" content="Portfolio de Mohamed El Feki Said, étudiant en Licence Systèmes embarqués à l'ISET Charguia : projets IoT, MQTT, LoRa, InfluxDB, Grafana et développement web.">
+<meta name="theme-color" content="#0b1b18">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mohamed El Feki Said – IoT et systèmes embarqués">
+<meta property="og:description" content="Capteurs, protocoles et tableaux de bord : projets IoT et développement logiciel.">
+<meta property="og:image" content="https://fekimed.netlify.app/assets/photo.jpg">
+<meta property="og:url" content="https://fekimed.netlify.app/">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --board:#0b1b18;      /* solder mask */
+  --board-2:#10251f;
+  --board-3:#16322b;
+  --line:#22423a;
+  --silk:#ece8dc;       /* silkscreen */
+  --muted:#9bb2aa;
+  --copper:#d9894a;
+  --copper-hi:#f2ac6e;
+  --signal:#6fe3c1;
+  --radius:10px;
+  --gutter:clamp(16px,4vw,32px);
+  --max:1120px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--board);color:var(--silk);
+  font:400 1.0625rem/1.65 "Instrument Sans",system-ui,sans-serif;
+  background-image:radial-gradient(rgba(217,137,74,.10) 1px,transparent 1.4px);
+  background-size:28px 28px;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:var(--copper-hi);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--silk)}
+:focus-visible{outline:2px solid var(--copper-hi);outline-offset:3px;border-radius:4px}
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--copper);color:#1a0f06;padding:8px 14px;border-radius:6px;z-index:100}
+.skip:focus{left:8px}
+
+/* ---------- header ---------- */
+header.top{position:sticky;top:0;z-index:50;background:rgba(11,27,24,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px}
+.brand{font:600 1.05rem "Bricolage Grotesque",sans-serif;letter-spacing:-.01em;color:var(--silk);text-decoration:none}
+nav ul{display:flex;gap:clamp(12px,2.4vw,26px);list-style:none;margin:0;padding:0}
+nav a{color:var(--muted);text-decoration:none;font-size:.95rem}
+nav a:hover{color:var(--silk)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--muted);font:500 .8rem "JetBrains Mono",monospace;padding:6px 11px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--copper);color:#1a0f06}
+@media (max-width:760px){nav{display:none}}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(40px,8vw,88px) 0 0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:clamp(28px,5vw,64px);align-items:center}
+h1{
+  font:700 clamp(2.7rem,7.4vw,5.6rem)/.98 "Bricolage Grotesque",sans-serif;
+  font-stretch:88%;letter-spacing:-.035em;margin:0 0 20px;
+}
+.role{font:500 clamp(1.15rem,2.3vw,1.45rem)/1.35 "Bricolage Grotesque",sans-serif;color:var(--copper-hi);margin:0 0 18px}
+.lead{max-width:34rem;color:#d4d9d0;margin:0 0 28px;font-size:1.12rem}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:8px;font:600 .98rem "Instrument Sans",sans-serif;text-decoration:none;border:1px solid var(--copper);transition:background .2s,color .2s,border-color .2s}
+.btn.primary{background:var(--copper);color:#1a0f06}
+.btn.primary:hover{background:var(--copper-hi);border-color:var(--copper-hi);color:#1a0f06}
+.btn.ghost{color:var(--silk);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--copper-hi);color:var(--copper-hi)}
+.portrait{position:relative;justify-self:end;width:min(100%,360px)}
+.portrait img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:14px;border:1px solid var(--line);background:var(--board-2)}
+.portrait::before,.portrait::after{content:"";position:absolute;width:18px;height:18px;border:2px solid var(--copper);z-index:1}
+.portrait::before{top:-9px;left:-9px;border-right:0;border-bottom:0}
+.portrait::after{bottom:-9px;right:-9px;border-left:0;border-top:0}
+.portrait figcaption{margin-top:14px;color:var(--muted);font-size:.92rem}
+@media (max-width:820px){
+  .hero-grid{grid-template-columns:1fr}
+  .portrait{justify-self:start;width:min(70%,260px);order:-1}
+}
+
+/* live trace */
+.trace{margin-top:clamp(40px,6vw,72px);border-block:1px solid var(--line);background:linear-gradient(180deg,rgba(16,37,31,.9),rgba(11,27,24,.6))}
+.trace .wrap{position:relative;padding-block:0}
+.trace canvas{display:block;width:100%;height:150px}
+.readout{position:absolute;top:12px;left:var(--gutter);right:var(--gutter);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:400 .78rem "JetBrains Mono",monospace;color:var(--muted);pointer-events:none}
+.readout b{color:var(--silk);font-weight:500}
+.readout i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--signal);margin-right:7px;box-shadow:0 0 8px var(--signal)}
+
+/* ---------- sections ---------- */
+section{padding:clamp(56px,9vw,104px) 0 0}
+h2{display:flex;align-items:center;gap:18px;margin:0 0 clamp(26px,4vw,40px);font:650 clamp(1.8rem,4vw,2.6rem)/1.1 "Bricolage Grotesque",sans-serif;font-stretch:90%;letter-spacing:-.025em}
+h2::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,var(--copper),rgba(217,137,74,.05));border-radius:2px;min-width:30px;position:relative}
+h3{font:600 1.2rem/1.3 "Bricolage Grotesque",sans-serif;margin:0 0 6px;letter-spacing:-.01em}
+p{margin:0 0 1em}
+.muted{color:var(--muted)}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(28px,5vw,64px)}
+.about p{max-width:38rem}
+dl.facts{margin:0;display:grid;gap:0;align-self:start;border-top:1px solid var(--line)}
+dl.facts div{display:grid;grid-template-columns:7.5rem 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+dl.facts dt{color:var(--muted)}
+dl.facts dd{margin:0}
+@media (max-width:820px){.about{grid-template-columns:1fr}}
+
+/* timeline */
+.tl{list-style:none;margin:0;padding:0 0 0 28px;position:relative}
+.tl::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--copper),var(--line))}
+.tl li{position:relative;padding:0 0 34px}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:"";position:absolute;left:-28px;top:7px;width:16px;height:16px;border-radius:50%;background:var(--board);border:2px solid var(--copper)}
+.tl .when{font:400 .85rem "JetBrains Mono",monospace;color:var(--copper-hi);margin-bottom:4px;display:block}
+.tl .org{color:var(--muted);margin:0 0 10px}
+.tl ul{margin:0;padding-left:1.15em}
+.tl li li{padding:0 0 4px}
+.tl li li::before{display:none}
+.split{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(28px,5vw,64px)}
+.split h3.col{font-size:1.05rem;color:var(--muted);font-weight:500;margin-bottom:20px}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+
+/* projects */
+.projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.proj{position:relative;background:var(--board-2);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .2s}
+.proj:hover{border-color:var(--copper)}
+.proj.big{grid-column:1/-1;background:linear-gradient(160deg,var(--board-3),var(--board-2) 60%)}
+.proj.big p:not(.kind){max-width:46rem;font-size:1.1rem}
+.proj.big h3{font-size:clamp(1.5rem,3vw,2rem);font-stretch:90%}
+.proj .kind{color:var(--copper-hi);font-size:.92rem;margin:0}
+.proj p{margin:0;color:#d4d9d0}
+.proj a.more{margin-top:auto;font-weight:600;text-decoration:none}
+.proj a.more:hover{text-decoration:underline}
+.tags{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0}
+.tags li{font:400 .78rem "JetBrains Mono",monospace;color:var(--silk);background:rgba(236,232,220,.07);border:1px solid var(--line);padding:3px 9px;border-radius:5px}
+@media (max-width:820px){.projects{grid-template-columns:1fr}.proj.big{grid-column:auto}}
+
+/* chain */
+.chain-intro{max-width:40rem;color:#d4d9d0}
+.chain{list-style:none;margin:36px 0 0;padding:0;display:flex;gap:0}
+.chain li{flex:1;position:relative;padding:26px 10px 0 0;min-width:0}
+.chain li::before{content:"";position:absolute;top:0;left:0;width:14px;height:14px;border-radius:50%;background:var(--board);border:2px solid var(--copper);z-index:1;animation:pad 8.4s infinite;animation-delay:calc(var(--i)*1.05s)}
+.chain li::after{content:"";position:absolute;top:6px;left:14px;right:0;height:2px;background:var(--copper);opacity:.55}
+.chain li:last-child::after{display:none}
+.chain strong{display:block;font:600 1rem "Bricolage Grotesque",sans-serif}
+.chain span{display:block;color:var(--muted);font-size:.88rem;line-height:1.4;margin-top:3px}
+@keyframes pad{0%,12%,100%{background:var(--board);box-shadow:none}4%{background:var(--copper-hi);box-shadow:0 0 14px var(--copper-hi)}}
+@media (prefers-reduced-motion:reduce){.chain li::before{animation:none}}
+@media (max-width:820px){
+  .chain{flex-direction:column;padding-left:6px}
+  .chain li{padding:0 0 26px 34px}
+  .chain li::before{top:3px;left:0}
+  .chain li::after{top:20px;left:6px;width:2px;height:auto;right:auto;bottom:-3px}
+}
+.note{margin-top:22px;color:var(--muted);font-size:.92rem}
+
+/* skills */
+.skills{border-top:1px solid var(--line)}
+.skills .row{display:grid;grid-template-columns:minmax(0,13rem) 1fr;gap:16px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.skills h3{font-size:1.05rem;margin:0}
+@media (max-width:700px){.skills .row{grid-template-columns:1fr;gap:10px}}
+.small-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px 48px;margin-top:44px}
+.small-cols h3{font-size:1.05rem;margin-bottom:10px}
+.small-cols p{color:#d4d9d0;margin:0}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,64px)}
+.links{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:10px}
+.links a{font-weight:600}
+form{display:grid;gap:16px}
+label{display:grid;gap:6px;font-weight:500;font-size:.95rem}
+input,textarea{font:inherit;color:var(--silk);background:var(--board-2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;width:100%}
+textarea{min-height:140px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--copper-hi);outline-offset:1px;border-color:var(--copper)}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.status{min-height:1.5em;font-size:.95rem;margin:0}
+.status.ok{color:var(--signal)}.status.err{color:#ff9a8a}
+form button{justify-self:start;cursor:pointer}
+form button:disabled{opacity:.6;cursor:progress}
+@media (max-width:820px){.contact{grid-template-columns:1fr}}
+
+footer{margin-top:clamp(64px,10vw,112px);border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:.92rem}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu" data-i18n="skip">Aller au contenu</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Mohamed El Feki Said</a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="#apropos" data-i18n="n_about">À propos</a></li>
+        <li><a href="#parcours" data-i18n="n_path">Parcours</a></li>
+        <li><a href="#projets" data-i18n="n_proj">Projets</a></li>
+        <li><a href="#competences" data-i18n="n_skills">Compétences</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="lang" role="group" aria-label="Langue">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="contenu">
+<div id="top"></div>
+<section class="hero" style="padding-top:clamp(40px,8vw,88px)">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Mohamed El Feki Said</h1>
+      <p class="role" data-i18n="role">Étudiant en informatique, IoT et systèmes embarqués</p>
+      <p class="lead" data-i18n="lead">Je relie des capteurs, des protocoles et des tableaux de bord pour que les mesures deviennent lisibles en temps réel.</p>
+      <div class="cta">
+        <a class="btn primary" href="assets/CV_Mohamed_El_Feki_Said.pdf" download data-i18n="cv">Télécharger mon CV</a>
+        <a class="btn ghost" href="#contact" data-i18n="contact_me">Me contacter</a>
+      </div>
+    </div>
+    <figure class="portrait" style="margin:0">
+      <img src="assets/photo.jpg" width="720" height="720" alt="Portrait de Mohamed El Feki Said, en veste bleu marine et chemise blanche" data-i18n-alt="photo_alt">
+      <figcaption data-i18n="caption">Tunis, Tunisie. Licence Systèmes embarqués, ISET Charguia.</figcaption>
+    </figure>
+  </div>
+
+  <div class="trace" aria-label="Signal de capteur simulé" role="img">
+    <div class="wrap">
+      <div class="readout">
+        <span><i></i><b id="topic">chambre/temperature</b></span>
+        <span><b id="val">--.-</b> °C <span data-i18n="sim">signal simulé</span></span>
+      </div>
+      <canvas id="scope"></canvas>
+    </div>
+  </div>
+</section>
+
+<section id="apropos">
+  <div class="wrap">
+    <h2 data-i18n="h_about">À propos</h2>
+    <div class="about">
+      <div>
+        <p data-i18n="about1">Étudiant en 3ᵉ année de Licence en Technologies de l'informatique, spécialité Systèmes embarqués, à l'ISET Charguia.</p>
+        <p data-i18n="about2">Je développe des solutions qui associent systèmes embarqués, IoT et applications logicielles : acquisition de données, communication MQTT et LoRa, supervision et interfaces web.</p>
+        <p data-i18n="about3">Je m'intéresse aux projets IoT, à l'embarqué et au développement logiciel.</p>
+      </div>
+      <dl class="facts">
+        <div><dt data-i18n="f_study">Formation</dt><dd data-i18n="f_study_v">Licence Systèmes embarqués, depuis 09/2025</dd></div>
+        <div><dt data-i18n="f_place">Lieu</dt><dd>Tunis, Tunisie</dd></div>
+        <div><dt data-i18n="f_lang">Langues</dt><dd data-i18n="f_lang_v">Arabe, français, anglais, allemand (notions)</dd></div>
+        <div><dt>GitHub</dt><dd><a href="https://github.com/ElF9i">github.com/ElF9i</a></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="parcours">
+  <div class="wrap">
+    <h2 data-i18n="h_path">Parcours</h2>
+    <div class="split">
+      <div>
+        <h3 class="col" data-i18n="h_exp">Expériences professionnelles</h3>
+        <ol class="tl">
+          <li>
+            <span class="when">01/2026 – 02/2026</span>
+            <h3 data-i18n="e1_t">Stagiaire, projet IoT</h3>
+            <p class="org">CIMS, Centre Informatique du Ministère de la Santé</p>
+            <ul>
+              <li data-i18n="e1_a">Conception d'une plateforme IoT virtualisée pour la transmission sécurisée et la supervision de données en temps réel.</li>
+              <li data-i18n="e1_b">Mise en place d'une chaîne de collecte et de visualisation basée sur MQTT, Telegraf, InfluxDB et Grafana sous Ubuntu.</li>
+            </ul>
+          </li>
+          <li>
+            <span class="when">01/2025 – 02/2025</span>
+            <h3 data-i18n="e2_t">Stagiaire, développement web</h3>
+            <p class="org">CIMS, Centre Informatique du Ministère de la Santé</p>
+            <ul>
+              <li data-i18n="e2_a">Développement d'un site web sans CMS et déploiement sur une machine virtuelle Ubuntu ; découverte de Linux, Apache et de l'hébergement web.</li>
+            </ul>
+          </li>
+          <li>
+            <span class="when" data-i18n="e3_when">06/2024 – 09/2026, trois étés</span>
+            <h3 data-i18n="e3_t">Stagiaire d'été</h3>
+            <p class="org">SOGEVA, Société Générale de Vêtements et Accessoires</p>
+            <ul>
+              <li data-i18n="e3_a">Préparation des commandes et livraisons ; gestion, réception et rangement du stock ; participation aux opérations logistiques.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+      <div>
+        <h3 class="col" data-i18n="h_edu">Formation</h3>
+        <ol class="tl">
+          <li>
+            <span class="when" data-i18n="s1_when">09/2025 – présent</span>
+            <h3 data-i18n="s1_t">Licence en technologies de l'informatique, Systèmes embarqués</h3>
+            <p class="org">ISET Charguia</p>
+          </li>
+          <li>
+            <span class="when">09/2024 – 06/2025</span>
+            <h3 data-i18n="s2_t">Licence en technologies de l'informatique</h3>
+            <p class="org">ISET Siliana</p>
+          </li>
+          <li>
+            <span class="when">07/2022 – 08/2022</span>
+            <h3 data-i18n="s3_t">Formation en développement Android</h3>
+            <p class="org">AJST, Association Jeunes Science de Tunisie</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projets">
+  <div class="wrap">
+    <h2 data-i18n="h_proj">Projets</h2>
+    <div class="projects">
+      <article class="proj big">
+        <p class="kind" data-i18n="p1_k">Mini-projet IoT</p>
+        <h3>MedBox</h3>
+        <p data-i18n="p1_d">Une boîte intelligente de médicaments construite autour d'une Heltec WiFi LoRa 32 V3 et d'un capteur DHT11. Les mesures transitent en LoRa jusqu'à une passerelle, puis en MQTT, et la supervision se fait avec Node-RED.</p>
+        <ul class="tags"><li>Heltec LoRa 32 V3</li><li>DHT11</li><li>LoRa</li><li>MQTT</li><li>Node-RED</li></ul>
+        <a class="more" href="https://github.com/ElF9i" data-i18n="more">Voir sur GitHub</a>
+      </article>
+      <article class="proj">
+        <p class="kind">ESP32 / LoRa</p>
+        <h3 data-i18n="p2_t">Station de mesure connectée</h3>
+        <p data-i18n="p2_d">Acquisition de température et d'humidité avec une Heltec LoRa V3, affichage OLED et transmission MQTT sécurisée vers ThingSpeak.</p>
+        <ul class="tags"><li>ESP32</li><li>OLED</li><li>MQTT</li><li>ThingSpeak</li></ul>
+        <a class="more" href="https://github.com/ElF9i" data-i18n="more">Voir sur GitHub</a>
+      </article>
+      <article class="proj">
+        <p class="kind" data-i18n="p3_k">Projet académique</p>
+        <h3 data-i18n="p3_t">Plateforme IoT de supervision</h3>
+        <p data-i18n="p3_d">Simulation de capteurs et visualisation des mesures en temps réel avec MQTT, InfluxDB et Grafana.</p>
+        <ul class="tags"><li>MQTT</li><li>InfluxDB</li><li>Grafana</li></ul>
+        <a class="more" href="https://github.com/ElF9i" data-i18n="more">Voir sur GitHub</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="chaine">
+  <div class="wrap">
+    <h2 data-i18n="h_chain">De la mesure à l'écran</h2>
+    <p class="chain-intro" data-i18n="chain_intro">La plupart de mes projets suivent le même trajet : un capteur mesure, une carte transmet, un serveur stocke, un tableau de bord affiche.</p>
+    <ol class="chain">
+      <li style="--i:0"><strong data-i18n="c1">Capteur</strong><span>DHT11</span></li>
+      <li style="--i:1"><strong data-i18n="c2">Carte</strong><span>ESP32, Heltec LoRa V3</span></li>
+      <li style="--i:2"><strong data-i18n="c3">Passerelle</strong><span>LoRa vers MQTT</span></li>
+      <li style="--i:3"><strong data-i18n="c4">Broker</strong><span>MQTT</span></li>
+      <li style="--i:4"><strong data-i18n="c5">Collecte</strong><span>Telegraf, Node-RED</span></li>
+      <li style="--i:5"><strong data-i18n="c6">Stockage</strong><span>InfluxDB</span></li>
+      <li style="--i:6"><strong data-i18n="c7">Affichage</strong><span>Grafana</span></li>
+    </ol>
+    <p class="note" data-i18n="chain_note">Schéma général : les outils exacts changent d'un projet à l'autre.</p>
+  </div>
+</section>
+
+<section id="competences">
+  <div class="wrap">
+    <h2 data-i18n="h_skills">Compétences</h2>
+    <div class="skills">
+      <div class="row"><h3 data-i18n="k1">Systèmes et IoT</h3><ul class="tags"><li>ESP32</li><li>Heltec LoRa V3</li><li>Arduino</li><li data-i18n="t_sensors">capteurs</li><li>MQTT</li><li>LoRa</li><li>Node-RED</li></ul></div>
+      <div class="row"><h3 data-i18n="k2">Programmation</h3><ul class="tags"><li>C/C++</li><li>Python</li><li>Java</li><li>JavaScript</li><li>PHP</li><li>HTML/CSS</li></ul></div>
+      <div class="row"><h3 data-i18n="k3">Web et données</h3><ul class="tags"><li>React</li><li>Node.js / Express</li><li>MySQL</li><li>API REST</li></ul></div>
+      <div class="row"><h3 data-i18n="k4">Outils et environnements</h3><ul class="tags"><li>PlatformIO</li><li>Linux / Ubuntu</li><li>Apache</li><li>VMware</li><li>InfluxDB</li><li>Grafana</li><li>Android Studio</li><li>Git</li></ul></div>
+    </div>
+    <div class="small-cols">
+      <div><h3 data-i18n="k5">Atouts</h3><p data-i18n="k5v">Autonomie, rigueur, esprit d'analyse, organisation et travail en équipe.</p></div>
+      <div><h3 data-i18n="k6">Hors écran</h3><p data-i18n="k6v">Électronique et Arduino, bricolage, sport, camping, randonnée, jeux vidéo, lecture et voyage.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <div class="contact">
+      <div>
+        <p data-i18n="ct_p">Un projet, un stage, une question ? Écrivez-moi, je réponds à chaque message.</p>
+        <ul class="links">
+          <li><a href="mailto:m.saidfeki@gmail.com">m.saidfeki@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/mohamed-elfeki-said" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/ElF9i" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+      <form id="form" action="https://formsubmit.co/m.saidfeki@gmail.com" method="POST">
+        <label><span data-i18n="l_name">Nom</span><input name="name" autocomplete="name" required></label>
+        <label><span data-i18n="l_mail">Adresse e-mail</span><input name="email" type="email" autocomplete="email" required></label>
+        <label><span data-i18n="l_msg">Message</span><textarea name="message" required></textarea></label>
+        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="_subject" value="Message depuis le portfolio">
+        <input type="hidden" name="_captcha" value="false">
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+        <button class="btn primary" type="submit" data-i18n="send">Envoyer le message</button>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Mohamed El Feki Said</span>
+    <span data-i18n="foot">Tunis, Tunisie</span>
+  </div>
+</footer>
+
+<script>
+/* ---------- i18n : le français est lu dans la page, l'anglais ici ---------- */
+const EN={
+skip:"Skip to content",n_about:"About",n_path:"Experience",n_proj:"Projects",n_skills:"Skills",
+role:"Computer science student, IoT and embedded systems",
+lead:"I connect sensors, protocols and dashboards so that measurements become readable in real time.",
+cv:"Download my CV",contact_me:"Get in touch",
+photo_alt:"Portrait of Mohamed El Feki Said in a navy blazer and white shirt",
+caption:"Tunis, Tunisia. Embedded Systems degree, ISET Charguia.",sim:"simulated signal",
+h_about:"About",
+about1:"Third-year student in the Computer Technologies degree, Embedded Systems track, at ISET Charguia.",
+about2:"I build solutions that combine embedded systems, IoT and software: data acquisition, MQTT and LoRa communication, monitoring and web interfaces.",
+about3:"I am interested in IoT projects, embedded systems and software development.",
+f_study:"Studies",f_study_v:"Embedded Systems degree, since 09/2025",f_place:"Location",f_lang:"Languages",f_lang_v:"Arabic, French, English, German (basics)",
+h_path:"Experience",h_exp:"Work experience",h_edu:"Education",
+e1_t:"Intern, IoT project",
+e1_a:"Designed a virtualized IoT platform for secure transmission and real-time monitoring of data.",
+e1_b:"Set up a collection and visualization pipeline based on MQTT, Telegraf, InfluxDB and Grafana on Ubuntu.",
+e2_t:"Intern, web development",
+e2_a:"Built a website without a CMS and deployed it on an Ubuntu virtual machine; discovered Linux, Apache and web hosting.",
+e3_when:"06/2024 – 09/2026, three summers",e3_t:"Summer intern",
+e3_a:"Order and delivery preparation; stock management, receiving and storage; support for logistics operations.",
+s1_when:"09/2025 – present",s1_t:"Bachelor in Computer Technologies, Embedded Systems",
+s2_t:"Bachelor in Computer Technologies",s3_t:"Android development training",
+h_proj:"Projects",
+p1_k:"IoT mini-project",
+p1_d:"A smart medicine box built around a Heltec WiFi LoRa 32 V3 and a DHT11 sensor. Measurements travel over LoRa to a gateway, then over MQTT, and monitoring runs on Node-RED.",
+p2_t:"Connected measuring station",
+p2_d:"Temperature and humidity acquisition with a Heltec LoRa V3, OLED display and secured MQTT transmission to ThingSpeak.",
+p3_k:"Academic project",p3_t:"IoT monitoring platform",
+p3_d:"Sensor simulation and real-time visualization of measurements with MQTT, InfluxDB and Grafana.",
+more:"See on GitHub",
+h_chain:"From measurement to screen",
+chain_intro:"Most of my projects follow the same path: a sensor measures, a board transmits, a server stores, a dashboard displays.",
+c1:"Sensor",c2:"Board",c3:"Gateway",c4:"Broker",c5:"Collection",c6:"Storage",c7:"Display",
+chain_note:"General diagram: the exact tools change from one project to another.",
+h_skills:"Skills",k1:"Systems and IoT",k2:"Programming",k3:"Web and data",k4:"Tools and environments",t_sensors:"sensors",
+k5:"Strengths",k5v:"Autonomy, rigor, analytical mind, organization and teamwork.",
+k6:"Away from the screen",k6v:"Electronics and Arduino, DIY, sport, camping, hiking, video games, reading and travel.",
+ct_p:"A project, an internship, a question? Write to me, I answer every message.",
+l_name:"Name",l_mail:"Email address",l_msg:"Message",send:"Send message",foot:"Tunis, Tunisia"
+};
+const FR={};
+document.querySelectorAll('[data-i18n]').forEach(el=>{FR[el.dataset.i18n]=el.innerHTML});
+const FR_ALT=document.querySelector('[data-i18n-alt]').alt;
+const T={fr:FR,en:EN};
+function setLang(l){
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const v=T[l][el.dataset.i18n];if(v!==undefined)el.innerHTML=v});
+  const img=document.querySelector('[data-i18n-alt]');img.alt=l==='en'?EN.photo_alt:FR_ALT;
+  document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===l)));
+  try{localStorage.setItem('lang',l)}catch(e){}
+  L=l; setStatus('');
+}
+let L='fr';
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+
+/* ---------- signal simulé : une seule animation d'ouverture ---------- */
+(function(){
+  const cv=document.getElementById('scope'),ctx=cv.getContext('2d');
+  const val=document.getElementById('val');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W,H,dpr,buf=[],step=3,last=0,t0=performance.now();
+  const sample=t=>24.8+0.7*Math.sin(t/1400)+0.3*Math.sin(t/310)+0.08*(Math.random()-.5);
+  function size(){
+    dpr=Math.min(devicePixelRatio||1,2);
+    W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    if(reduce){buf=[];for(let i=0;i<W/step;i++)buf.push(sample(i*90));draw()}
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='rgba(155,178,170,.10)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x+.5,0);ctx.lineTo(x+.5,H);ctx.stroke()}
+    for(let y=H/2%30;y<H;y+=30){ctx.beginPath();ctx.moveTo(0,y+.5);ctx.lineTo(W,y+.5);ctx.stroke()}
+    if(!buf.length)return;
+    const y=v=>H/2-(v-24.8)*52;
+    ctx.lineWidth=2.2;ctx.lineJoin='round';ctx.strokeStyle='#f2ac6e';ctx.shadowColor='rgba(242,172,110,.7)';ctx.shadowBlur=10;
+    ctx.beginPath();buf.forEach((v,i)=>{i?ctx.lineTo(i*step,y(v)):ctx.moveTo(0,y(v))});ctx.stroke();
+    ctx.shadowBlur=0;
+    const i=buf.length-1;ctx.fillStyle='#6fe3c1';ctx.beginPath();ctx.arc(i*step,y(buf[i]),3.5,0,7);ctx.fill();
+  }
+  function loop(now){
+    if(now-last>28){last=now;buf.push(sample(now-t0));const max=Math.ceil(W/step);if(buf.length>max)buf.shift();draw()}
+    requestAnimationFrame(loop);
+  }
+  size();addEventListener('resize',size);
+  if(reduce){val.textContent=buf[buf.length-1].toFixed(1)}
+  else{requestAnimationFrame(loop);setInterval(()=>{if(buf.length)val.textContent=buf[buf.length-1].toFixed(1)},900)}
+})();
+
+/* ---------- formulaire : envoi direct vers l'e-mail (FormSubmit) ---------- */
+const form=document.getElementById('form'),st=document.getElementById('status');
+const MSG={fr:{ok:"Message envoyé. Merci, je vous réponds bientôt.",err:"Envoi impossible. Écrivez-moi directement à m.saidfeki@gmail.com.",wait:"Envoi en cours…"},
+           en:{ok:"Message sent. Thank you, I will reply soon.",err:"Could not send. Please write to m.saidfeki@gmail.com directly.",wait:"Sending…"}};
+function setStatus(k,cls){st.className='status '+(cls||'');st.textContent=k?MSG[L][k]:''}
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const btn=form.querySelector('button');btn.disabled=true;setStatus('wait');
+  try{
+    const r=await fetch('https://formsubmit.co/ajax/m.saidfeki@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(form)))});
+    const j=await r.json();
+    if(r.ok&&String(j.success)==='true'){setStatus('ok','ok');form.reset()}else throw 0;
+  }catch(_){setStatus('err','err')}
+  btn.disabled=false;
+});
+try{const s=localStorage.getItem('lang');if(s==='en')setLang('en')}catch(e){}
+</script>
+</body>
+</html>
